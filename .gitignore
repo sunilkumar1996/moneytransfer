@@ -1,0 +1,3 @@
+.env
+moneytransfer/__pycache__/
+transfer/__pycache__/

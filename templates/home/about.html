@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block content %}
+
+{% include "home/header.html" %}
+<main id="main">
+    <section class="page-section abt-banner">
+		<div class="container">
+			 <div class="row">
+				<div class="col-md-5 d-flex h-100 lft-abt">
+					<div class="d-flex align-items-center h-100 m-sml-0 p-0 w-100">
+						<div class="jumbotron caption-rt abt-banner-info w-100">
+							<h2 style="color: #8C8C8C;">Our goal</h2>
+							<h5>
+							   We want to connect people globally to ensure our customers have the finacial fexibility the need.
+							</h5>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-7 rt-abt">
+					<img src='{% static "img\4PAGE\rouded-img.png" %}' alt="" class="img-fluid img-rnd"/>
+				</div>
+			</div>
+		</div>
+	</section>
+ 
+  <section class="page-section section-ft lang-section abt-connect  pt-5" style="background:#f2f2f2 url({% static 'img/4PAGE/Footer_About.png'%})">
+    <div class="container">
+		<div class="row">
+			<div class="cl-box col-md-12 text-center mt-5 pt-5">
+				<h2 class="mb-5 pb-4">Connecting people globally</h2>
+				<img src="{% static 'img\4PAGE\Graphic_2 (3).png' %}" alt="" class="img-fluid">
+			</div>
+		</div>
+	</div>
+</section>
+ </main><!-- End #main -->
+<!-- ======= Footer ======= -->
+
+
+{% endblock content %}
+
+  

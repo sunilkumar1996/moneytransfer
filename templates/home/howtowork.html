@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block content %}
+
+{% include "home/header.html" %}
+
+  <main id="main">
+    <section class="page-section hwbanner-top" style="background:#f2f2f2 url({% static 'img/Graphic-aroow.png'%})">
+      <div class="container-fluid align-items-center">
+        <div class="row">
+          <div class="col-md-7 offset-md-4 rt-redbox">
+				<div class="pill-spice ml-5">
+					<img class="img" src="{% static 'img\Blob_How_It_Works_Background.png'%}"
+					  style="max-width: 100%;  height: auto;" alt="" />
+					<div class="img-caption">
+						<h2>Sending Money Made <br> Easy</h2>
+						<h5> Transfeering Money to family and friends should't be a chore which is why our system has been designed
+					  to ensure user can make transfer quikly and easy.</h5>
+					</div>
+				</div>
+          </div>
+         
+        </div>
+      </div>
+    </section><!-- End Tabs Section -->
+<section class="page-section makecard-boxes">
+	<div class="container">
+			<div class="col-12">
+				<h2 style="color: #8C8C8C;padding-bottom: 40px;">Make it Simple</h2>
+			</div>
+			<div class="col-12">
+				<div class="row">
+					<div class="col-md-4 col-6">
+						<div class="card wt-card text-center">
+							<img class="img" src="{% static 'img\hw-icon1.png'%}" alt="" />
+							<h4>Download <br class="d-xs-none">the app</h4>
+						</div>
+					</div>
+					<div class="col-md-4 col-6">
+						<div class="card wt-card text-center">
+							<img class="img" src="{% static 'img\hw-icon3.png'%}" alt="" />
+							<h4>Register <br class="d-xs-none">an account</h4>
+						</div>
+					</div>
+					<div class="col-md-4 col-6">
+						<div class="card wt-card text-center">
+							<img class="img" src="{% static 'img\hw-icon2.png'%}" alt="" />
+							<h4>Select<br class="d-xs-none"> currencies</h4>
+						</div>
+					</div>
+					<div class="col-md-4 col-6">
+						<div class="card wt-card text-center">
+							<img class="img" src="{% static 'img\hw-icon5.png'%}" alt="" />
+							<h4>Enter<br class="d-xs-none"> banking details</h4>
+						</div>
+					</div>
+					<div class="col-md-4 col-6">
+						<div class="card wt-card text-center">
+							<img class="img" src="{% static 'img\hw-icon4.png'%}" alt="" />
+							<h4>Choose an <br class="d-xs-none">amount</h4>
+						</div>
+					</div>
+					<div class="col-md-4 col-6">
+						<div class="card wt-card text-center">
+							<img class="img" src="{% static 'img\hw-icon6.png'%}" alt="" />
+							<h4>Confirm<br class="d-xs-none"> payment</h4>
+						</div>
+					</div>
+				</div>
+			</div>
+	 </div>
+</section>
+<Section class="page-section section-ft lang-section pt-5" style="background:#f2f2f2 url({% static 'img/Footer_How_It_Works_Background.png'%})">
+  <div class="container">
+	<div class="row">
+		<div class="col-md-12 text-center mt-5">
+			<h2 class="mb-5 mt-5" style="color:  #8C8C8C;">Supported Countries</h2>
+			<img src="{% static 'img\Graphic_3.png' %}"	class="img-fluid w-100 mt-4" alt="">
+		</div>
+	 </div>
+  </div>
+</div>
+</Section>
+</main><!-- End #main -->
+  
+  {% endblock content %}

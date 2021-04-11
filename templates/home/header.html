@@ -1,0 +1,25 @@
+{% load static %}
+<style>
+
+</style>
+  <header id="header" class="header">
+	<div class="container main-menu p-0">
+		<nav id="nav-menu-containers" class="navbar navbar-expand-md navbar-light theme-navheader pl-0 pr-0">
+			<div id="logo" class="logo">
+				<a href="{% url 'home' %}"><img class="rounded" src="{% static 'img\4PAGE\logo.png'%}"></img></a>
+			</div><!-- LOGODIV-ENDS-HERE -->
+			<button id="tog-btn" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+				<span></span><span></span><span></span><span></span>
+			</button><!-- TOGGLE-ENDS-HERE -->
+			<div class="collapse navbar-collapse themenav-collapse" id="navbarCollapse">
+				<ul class="navbar-nav ml-auto theme-meganav">
+					<li class="menu-active active nav-item"><a class="nav-link" href="{% url 'home' %}">Transfer</a></li>
+					<li class="nav-item"><a class="nav-link" href="{% url 'howtowork' %}">How to Work</a></li>
+					<li class="nav-item"><a class="nav-link" href="{% url 'mobiletransfer' %}">Mobile transfer</a></li>
+					<li class="nav-item"><a class="nav-link" href="{% url 'about' %}">About</a></li>
+				</ul>
+				
+			</div>
+		</nav><!-- #nav-menu-container -->		    		
+	</div>
+</header><!-- #header-ENDS-HERE -->

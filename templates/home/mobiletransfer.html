@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block content %}
+
+{% include "home/header.html" %}
+
+
+  <main id="main">
+    <section class="page-section mobtr-banner">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col left-col">
+				<h2 style="color: #8C8C8C;">Send payments  on the go from anywhere in the world</h2>
+				<h5>make your finanacal transfer experience esay with a simple application</h5>
+				<a class="btn btn-read" href="/">Download</a>
+		  </div>
+          <div class="col-md-7 rt-bnr">
+            <img class="img-fluid w-100" src='{% static "img\Mobile_Transfers.png" %}' alt=""/>
+           </div>
+		</div>
+	</div>
+ </section>
+<section class="page-section mob-helpsec">
+		<div class="container-fluid">
+			<div class="row">
+				  <div class="col-md-5 lt-help">
+					  <div class="pill-spice">
+							<img class="img-fluid w-100" src="{% static 'img\3rdpage\2_Blob_Mobile_Transfers_Background.png'%}"	alt="" />
+							<div class="img-caption">
+								<h2>Help your money grow</h2>
+								<h5 style=""> No charging fees<br>
+								  Quick and easy process<br>
+								  send your money to our 90 countries<br>
+								  Make Transfers on the go
+								</h5>
+							</div>
+					  </div>
+				  </div>
+				  <div class="col-md-4 rt-help" style="padding-top: 15%;">
+						<img src="{% static 'img\3rdpage\Graphic_2 (2).png' %}" style="max-width: 100%;  height: auto;" alt="">
+				 </div>
+			</div>
+      </div>
+</section><!-- End Tabs Section -->
+<Section class="page-section section-ft lang-section trans-section  pt-5" style="background:#f2f2f2 url({% static 'img/3rdpage/Footer_Mobile_Transfers_Background.png'%})">
+      <div class="container">
+			<div class="row">
+				  <div class="col-md-6 text-center">
+					  <img src='{% static "img\3rdpage\mob-1.png" %}' alt="" class="img-fluid mob-img" />
+				  </div>
+				  <div class="col-md-6 btm-leftspice d-flex h-100">
+						<div class="d-flex align-items-center h-100 m-sml-0 p-0 w-100">
+							<div class="jumbotron caption-rt w-100">
+								<h2 style="color: #8C8C8C;">Transfer on the go</h2>
+								<h5> Use the Swiftwyer app to make global transfer whilist on the move</h5>
+								<div class="col-12 p-0 d-flex">
+									<a href="" class="mr-5"><img src="{% static 'img\3rdpage\Button.png' %}"/></a>
+									<a href=""><img src="{% static 'img\3rdpage\Button_2.png' %} /"></a>
+								</div>
+							</div>
+						</div>
+				  </div>
+			</div>
+
+      </div>
+</section>
+
+  </main><!-- End #main -->
+  <!-- ======= Footer ======= -->
+  {% endblock content %}

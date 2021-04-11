@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block content %}
+
+{% include "home/header.html" %}
+
+  <main id="main">
+    <section class="page-section section-banner">
+      <div class="container-fluid align-items-center">
+        <div class="row">
+          <div class="col-md-6 pl-5 left-banner">
+				<div class="pill-spice ml-5">
+					<img class="img" src="{% static 'img/Blob_Transfer_Calculator_Background.png'%}"
+					  style="max-width: 100%;  height: auto;" alt="" />
+					  <div class="img-caption">
+							<h2>Send money all over the world with one simple click</h2>
+							<h5> No charging fees means global payments to over 90 countries won'ot cost a thing</h5>
+					  </div>
+				</div>
+          </div>
+
+          <div class="col-md-5 align-items-center text-center hd-right">
+
+           <img src="{% static 'img\Graphic_1.png' %}" style="max-width: 100%;  height: auto;" alt="">
+           <a  href="{% url 'mobiletransfer' %}"><img src="{% static 'img\Button_1.png' %}"  style="max-width: 60%;  height: auto; align-items: center;" alt=""alt=""></a>
+
+          </div>
+
+        </div>
+      </div>
+
+      </div>
+      <div class="col-md-2"></div>
+      </div>
+    </section><!-- End Tabs Section -->
+    
+    <section class="page-section section-rates pt-5">
+      <div class="container">
+        <div class="row">
+			<div class="col-12 top-hd text-right mb-5">
+				<h2 style="text-align: right;color: #8C8C8C;"> Live exchange rates</h2>
+			</div>
+			<div class="col-12 mt-5 rates-module">
+				<div class="col-md-10">
+					<img src="{% static 'img\Graphic_2.png' %}"  style="max-width: 100%;  height: auto;" alt="">
+					<button class="btn  pull-right"></button>
+					<a  href="{% url 'mobiletransfer' %}"><img class="btn-img1" src="{% static 'img\Button_3.png' %}" style="max-width: 6%;  height: auto; margin-left: 91%;
+					  margin-top: -34%;left: 100px;
+					  top: 150px;" alt=""></a>
+					   <a  href="{% url 'mobiletransfer' %}"><img  class="btn-img2"src="{% static 'img\Button_3.png' %}" style="max-width: 6%;  height: auto;margin-left: 91%;
+						margin-top: -17%;left: 100px;
+						top: 150px;" alt=""></a>
+				   <a class="c-button" href="{% url 'mobiletransfer' %}"> <img src="{% static 'img\Button_2.png' %}"   style="max-width: 25%;"alt=""> </a>
+				</div>
+			</div>
+         </div>
+      </div>
+    </section>
+  
+    <section class="page-section section-ft" style="background:#f2f2f2 url({% static 'img/ftr-bg.png'%})">
+      <div class="container align-items-center">
+			<div class="col-12">
+				<div class="row">
+				  <div class="col-md-6 btm-leftspice" style="margin-top: 100px;">
+					<h2 style="color: #8C8C8C;">Transfer on the go</h2>
+					<h4>
+					  Use the Swiftwyer app to make global transfer whilist on the move
+					</h4>
+					<a class="btn btn-read" href="{% url 'mobiletransfer' %}" >Read more</a>         
+				  </div>
+				  <div class="col-md-6">
+						<img src='{% static "img/Application_UI_With_Card.png" %}' alt="" class="img-fluid">
+				  </div>
+		     </div>
+
+			</div>
+
+        
+      </div>
+
+
+    </section>
+
+
+  </main><!-- End #main -->
+  <!-- ======= Footer ======= -->
+
+  {% endblock content %}

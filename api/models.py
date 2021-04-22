@@ -1,44 +1,55 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser, BaseUserManager, PermissionsMixin
 from django.utils.translation import ugettext_lazy as _
-from django.contrib.auth.base_user import BaseUserManager
+# from django.contrib.auth.base_user import BaseUserManager
 
 
-class CustomUserManager(BaseUserManager):
-    def create_user(self, email, password, **extra_fields):
-        if not email:
-            raise ValueError(_("The Email must be set !"))
-        email = self.normalize_email(email)
-        user = self.model(email=email, **extra_fields)
+class UserManager(BaseUserManager):
+    def create_user(self, email, password=None):
+        """Create and return a `User` with an email, username and password."""
+        # if username is None:
+        #     raise TypeError('Users must have a username.')
+
+        if email is None:
+            raise TypeError('Users must have an email address.')
+
+        user = self.model(email=self.normalize_email(email))
         user.set_password(password)
         user.save()
+
         return user
 
-    def create_superuser(self, email, password, **extra_fields):
-        extra_fields.setdefault('is_staff', True)
-        extra_fields.setdefault('is_superuser', True)
-        extra_fields.setdefault('is_active', True)
+    def create_superuser(self, email, password):
+        """
+        Create and return a `User` with superuser (admin) permissions.
+        """
+        if password is None:
+            raise TypeError('Superusers must have a password.')
 
-        if extra_fields.get("is_staff") is not True:
-            raise ValueError(_("Superuser must have is_staff=True."))
-        if extra_fields.get("is_superuser") is not True:
-            raise ValueError(_("Superuser must have is_superuser=True."))
-        return self.create_user(email, password, **extra_fields)
+        user = self.create_user(email, password)
+        user.is_superuser = True
+        user.is_staff = True
+        user.save()
+
+        return user
 
 
 class User(AbstractUser):
     username = None
     email = models.EmailField(_('email address'), unique=True)
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = []
-    dob = models.DateField(_("Date of Birth"))
-    phone_number = models.CharField(_("Phone Number"), max_length=15)
-    country = models.CharField(_("Country Name"), max_length=100)
-    city = models.CharField(_("City Name"), max_length=100)
-    state = models.CharField(_("State Name"), max_length=100)
-    postal_code = models.IntegerField(_("Postal Code"))
+    dob = models.DateField(_("Date of Birth"), null=True, blank=True)
+    phone_number = models.CharField(_("Phone Number"), max_length=15, null=True, blank=True)
+    country = models.CharField(_("Country Name"), max_length=100, null=True, blank=True)
+    city = models.CharField(_("City Name"), max_length=100, null=True, blank=True)
+    state = models.CharField(_("State Name"), max_length=100, null=True, blank=True)
+    postal_code = models.IntegerField(_("Postal Code"), null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
-    objects =  CustomUserManager()
+    USERNAME_FIELD = 'email' 
+    REQUIRED_FIELDS = []
+
+    objects =  UserManager()
 
     def __str__(self):
         return self.email

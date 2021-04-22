@@ -1,8 +1,10 @@
 from django.shortcuts import render
 from rest_framework import viewsets
-from django.contrib.auth.models import User
+# from django.contrib.auth.models import User
 from .serializers import UserSerializer
+from django.contrib.auth import get_user_model
 
+User = get_user_model()
 
 # ViewSets define the view behavior.
 class UserViewSet(viewsets.ModelViewSet):

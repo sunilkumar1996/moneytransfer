@@ -51,7 +51,11 @@ REST_FRAMEWORK = {
     # or allow read-only access for unauthenticated users.
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly',
-    ]
+    ],
+    "DEFAULT_AUTHENTICATION_CLASSES": [                               # new
+        "rest_framework.authentication.SessionAuthentication",        # new
+        "rest_framework_simplejwt.authentication.JWTAuthentication",  # new 
+    ],
 }
 
 MIDDLEWARE = [
@@ -143,3 +147,6 @@ STATICFILES_DIRS = (
 )
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+
+AUTH_USER_MODEL = "api.User"

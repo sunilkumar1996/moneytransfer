@@ -152,9 +152,14 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
 
+# Static file path, This file path use on the server so please Don't remove on the developent mode.
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-
+# Custom User Model And This model is full Authenticated, all type of user save this model like Super-User, normal User.
 AUTH_USER_MODEL = "api.User"
 
-
+# django-rest-framework-simplejwt
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=59),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+}

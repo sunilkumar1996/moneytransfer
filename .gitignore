@@ -3,3 +3,4 @@ transfer/__pycache__/
 api/__pycache__/
 api/migrations/__pycache__/
 moneytranfer/__pycache__/
+venv

@@ -13,8 +13,6 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         model = User
         fields = ['url', 'username', 'email', 'is_staff']
 
-
-
 # Register Serializer class 
 class RegisterSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(
@@ -24,8 +22,7 @@ class RegisterSerializer(serializers.ModelSerializer):
 
     password = serializers.CharField(
         write_only=True, 
-        required=True,
-        validators=[validate_password],
+        required=True
         )
     password2 = serializers.CharField(
         write_only=True,
@@ -34,7 +31,7 @@ class RegisterSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ["first_name", "last_name", "dob", "country", "city", "state", "postal_code", "email", "password", "password2" ]
+        fields = ["first_name", "last_name", "dob", "country", "city", "state", "postal_code", "email", "password", "password2", ]
         extra_kwargs = {
             "password": {"write_only": True, "required": True},
             "first_name": {"required": True},
@@ -49,7 +46,7 @@ class RegisterSerializer(serializers.ModelSerializer):
 
     def validate(self, attrs):
         if attrs['password'] != attrs['password2']:
-            raise serializers.ValidationError({"password": "Password fields didn't match."})
+            raise serializers.ValidationError({"password": "Password fields didn't match!!"})
         return attrs
 
     def create(self, validated_data):

@@ -43,22 +43,12 @@ INSTALLED_APPS = [
     ###########################
     'api',
     'rest_framework',
+    'corsheaders',
 ]
 
 
-REST_FRAMEWORK = {
-    # Use Django's standard `django.contrib.auth` permissions,
-    # or allow read-only access for unauthenticated users.
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly',
-    ],
-    "DEFAULT_AUTHENTICATION_CLASSES": [                               # new
-        "rest_framework.authentication.SessionAuthentication",        # new
-        "rest_framework_simplejwt.authentication.JWTAuthentication",  # new 
-    ],
-}
-
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",  # new
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -67,6 +57,22 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+# Allows any client access.                      
+CORS_ORIGIN_ALLOW_ALL = True
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [ 
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+    "DEFAULT_PARSER_CLASSES": [
+        "rest_framework.parsers.JSONParser", 
+    ],
+    "DEFAULT_AUTHENTICATION_CLASSES": [                               # new
+        "rest_framework.authentication.SessionAuthentication",        # new
+        "rest_framework_simplejwt.authentication.JWTAuthentication",  # new 
+    ],
+}
 
 ROOT_URLCONF = 'moneytransfer.urls'
 TEMPLATE_DIRS = (
@@ -150,3 +156,5 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 
 AUTH_USER_MODEL = "api.User"
+
+

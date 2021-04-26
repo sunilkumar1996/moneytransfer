@@ -12,6 +12,7 @@ router.register(r'users', views.UserViewSet)
 urlpatterns = [
     path('auth/', include(router.urls)),
     path('auth/', include('rest_framework.urls', namespace='rest_framework')),
-    path('token/access/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('auth/token/access/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('auth/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('auth/register/', views.register, name='register'),
 ]

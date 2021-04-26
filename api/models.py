@@ -29,6 +29,7 @@ class UserManager(BaseUserManager):
         user = self.create_user(email, password)
         user.is_superuser = True
         user.is_staff = True
+        user.is_active = True
         user.save()
 
         return user
@@ -38,7 +39,7 @@ class User(AbstractUser):
     username = None
     email = models.EmailField(_('email address'), unique=True)
     dob = models.DateField(_("Date of Birth"), null=True, blank=True)
-    phone_number = models.CharField(_("Phone Number"), max_length=15, null=True, blank=True)
+    phone_number = models.CharField(_("Phone Number"), max_length=15, null=True, blank=True, unique=True)
     country = models.CharField(_("Country Name"), max_length=100, null=True, blank=True)
     city = models.CharField(_("City Name"), max_length=100, null=True, blank=True)
     state = models.CharField(_("State Name"), max_length=100, null=True, blank=True)
@@ -53,3 +54,19 @@ class User(AbstractUser):
 
     def __str__(self):
         return self.email
+
+
+# et body = {
+#   first_name: 'Rick',
+#   last_name: 'James',
+#   email: 'whoismike@jones.com',
+#   country: 'US',
+#   state_province: 'NY',
+#   city: 'New York',
+#   street_address: '1546 Madison Ave.',
+#   postal_code: '10001',
+#   currency: 'USD',
+#   type: 'personal',
+#   currency: 'USD',
+#   default_funding_method: 'push'
+# };

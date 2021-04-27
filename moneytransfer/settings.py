@@ -26,7 +26,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'ptscnc+y!fl!qj204zj#e@%#fkvf#mm$uv6=1a&hz8qgkz!v9u'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ["*"]
 
@@ -77,14 +77,15 @@ REST_FRAMEWORK = {
 }
 
 ROOT_URLCONF = 'moneytransfer.urls'
-TEMPLATE_DIRS = (
-    os.path.join(os.path.dirname(__file__), 'templates'),
-)
+# TEMPLATE_DIRS = (
+#     os.path.join(os.path.dirname(__file__), 'templates'),
+# )
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR  + '/templates'],
+        # 'DIRS': [BASE_DIR  + '/templates'],
+        'DIRS': [os.path.join(BASE_DIR, "templates")],
         
         'APP_DIRS': True,
         'OPTIONS': {

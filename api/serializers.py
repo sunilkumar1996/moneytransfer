@@ -6,7 +6,6 @@ from django.contrib.auth.hashers import make_password
 
 User = get_user_model()
 
-
 # Serializers define the API representation.
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:

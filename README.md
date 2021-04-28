@@ -9,3 +9,5 @@
     pip install --upgrade pip && pip install -r requirements.txt
 
 ```
+
+tail -n 50 /var/log/nginx/access.log

@@ -57,6 +57,7 @@ class User(AbstractUser):
     updated_at = models.DateTimeField(auto_now=True)
     is_verified = models.BooleanField(default=False)
     account_type = models.CharField(_("Account Type"), null=True, blank=True, max_length=100)
+    image_url = models.ImageField(upload_to="user_pic", default="img/user/user_image.jpg")
 
     USERNAME_FIELD = 'email' 
     REQUIRED_FIELDS = []

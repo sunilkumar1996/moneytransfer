@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from rest_framework import generics, status, views, permissions
-from .serializers import RegisterSerializer, ChangePasswordSerializer, SetNewPasswordSerializer, ResetPasswordEmailRequestSerializer, EmailVerificationSerializer, LoginSerializer, LogoutSerializer
+from .serializers import RegisterSerializer, ChangePasswordSerializer, SetNewPasswordSerializer, ResetPasswordEmailRequestSerializer, EmailVerificationSerializer, LoginSerializer, LogoutSerializer, AuthTokenLoginSerializer
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
 from .models import User
@@ -25,8 +25,9 @@ from rest_framework.views import APIView
 from knox.models import AuthToken
 from django.contrib.auth import login
 
-from rest_framework.authtoken.serializers import AuthTokenSerializer
-from knox.views import LoginView as KnoxLoginView
+# from rest_framework.authtoken.serializers import AuthTokenSerializer
+# from knox.views import LoginView as KnoxLoginView
+from .helpers import LoginView as KnoxLoginView
 
 
 class CustomRedirect(HttpResponsePermanentRedirect):
@@ -68,7 +69,7 @@ class LoginApiKnox(KnoxLoginView):
     permission_classes = (permissions.AllowAny, )
 
     def post(self, request, format=None):
-        serializer = AuthTokenSerializer(data=request.data)
+        serializer = AuthTokenLoginSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data['user']
         login(request, user)
@@ -79,7 +80,7 @@ class LoginApiKnox(KnoxLoginView):
 class RegisterView(generics.GenericAPIView):
 
     serializer_class = RegisterSerializer
-    renderer_classes = (UserRenderer,)
+    # renderer_classes = (UserRenderer,)
 
     def post(self, request):
         user = request.data
@@ -87,18 +88,20 @@ class RegisterView(generics.GenericAPIView):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         user_data = serializer.data
-        # user = User.objects.get(email=user_data['email'])
-        # token = RefreshToken.for_user(user).access_token
-        # current_site = get_current_site(request).domain
-        # relativeLink = reverse('email-verify')
-        # absurl = 'http://'+current_site+relativeLink+"?token="+str(token)
-        # email_body = 'Hi '+user.email + \
-        #     ' Use the link below to verify your email \n' + absurl
-        # data = {'email_body': email_body, 'to_email': user.email,
-        #         'email_subject': 'Verify your email'}
+        user = User.objects.get(email=user_data['email'])
+        user.is_active = False
+        user.save()
+        token = RefreshToken.for_user(user).access_token
+        current_site = get_current_site(request).domain
+        relativeLink = reverse('email-verify')
+        absurl = 'http://'+current_site+relativeLink+"?token="+str(user.id)
+        email_body = 'Hi '+user.email + \
+            ' Use the link below to verify your email \n' + absurl
+        data = {'email_body': email_body, 'to_email': user.email,
+                'email_subject': 'Verify your email'}
 
-        # Util.send_email(data)
-        return Response(user_data, status=status.HTTP_201_CREATED)
+        Util.send_email(data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
 class VerifyEmail(views.APIView):
@@ -107,15 +110,16 @@ class VerifyEmail(views.APIView):
     token_param_config = openapi.Parameter(
         'token', in_=openapi.IN_QUERY, description='Description', type=openapi.TYPE_STRING)
 
-    @swagger_auto_schema(manual_parameters=[token_param_config])
+    # @swagger_auto_schema(manual_parameters=[token_param_config])
     def get(self, request):
         token = request.GET.get('token')
-        print(token)
         try:
-            payload = jwt.decode(token, settings.SECRET_KEY)
-            user = User.objects.get(id=payload['user_id'])
+            # payload = jwt.decode(token, settings.SECRET_KEY)
+            user = User.objects.get(pk=int(token))
+            print(user.is_verified)
             if not user.is_verified:
                 user.is_verified = True
+                user.is_active = True
                 user.save()
             return Response({'email': 'Successfully activated'}, status=status.HTTP_200_OK)
         except jwt.ExpiredSignatureError as identifier:
@@ -130,7 +134,12 @@ class LoginAPIView(generics.GenericAPIView):
     def post(self, request):
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        res = {
+            "status": "Success",
+            "access": serializer.data,
+            # "data": User.objects.
+        }
+        return Response(res, status=status.HTTP_200_OK)
 
 
 class RequestPasswordResetEmail(generics.GenericAPIView):

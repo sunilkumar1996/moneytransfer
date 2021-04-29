@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'drf_yasg',
     # 'django_rest_passwordreset',
     'authentication',
+    'crispy_forms',
 ]
 
 # SWAGGER_SETTINGS = {
@@ -187,6 +188,16 @@ STATICFILES_DIRS = (
 
 # Static file path, This file path use on the server so please Don't remove on the developent mode.
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+# STATIC_URL = '/staticfiles/'
+# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+# STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
+
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 # Custom User Model And This model is full Authenticated, all type of user save this model like Super-User, normal User.
 

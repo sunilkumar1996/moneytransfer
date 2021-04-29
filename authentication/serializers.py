@@ -9,8 +9,70 @@ from django.utils.encoding import smart_str, force_str, smart_bytes, DjangoUnico
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from rest_framework.validators import UniqueValidator
 from django.contrib.auth.hashers import make_password
+from django.contrib.auth import authenticate
+from django.utils.translation import gettext_lazy as _
 
 User = get_user_model()
+
+class AuthTokenLoginSerializer(serializers.Serializer):
+    email = serializers.CharField(
+        label=_("Username"),
+        write_only=True
+    )
+    password = serializers.CharField(
+        label=_("Password"),
+        style={'input_type': 'password'},
+        trim_whitespace=False,
+        write_only=True
+    )
+    token = serializers.CharField(
+        label=_("Token"),
+        read_only=True
+    )
+
+    class Meta:
+        model = User
+        fields = [
+            "first_name", 
+            "last_name", 
+            "dob", 
+            "phone_number", 
+            "country", 
+            "city", 
+            "state", 
+            "postal_code", 
+            "email", 
+            "password", 
+            "password2", 
+            "account_type", 
+            "image_url",
+            "is_verified",
+            ]
+
+    def validate(self, attrs):
+        username = attrs.get('email')
+        password = attrs.get('password')
+
+        if username and password:
+            obj = User.objects.filter(email=username).first()
+            if obj:
+                if obj.is_active == False:
+                    raise serializers.ValidationError({"message": "Your Email is not confirm !!"})
+            user = authenticate(request=self.context.get('request'),
+                                username=username, password=password)
+
+            # The authenticate call simply returns None for is_active=False
+            # users. (Assuming the default ModelBackend authentication
+            # backend.)
+            if not user:
+                msg = _('Unable to log in with provided credentials.')
+                raise serializers.ValidationError(msg, code='authorization')
+        else:
+            msg = _('Must include "username" and "password".')
+            raise serializers.ValidationError(msg, code='authorization')
+
+        attrs['user'] = user
+        return attrs
 
 class ChangePasswordSerializer(serializers.Serializer):
     model = User
@@ -43,7 +105,22 @@ class RegisterSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ["first_name", "last_name", "dob", "phone_number", "country", "city", "state", "postal_code", "email", "password", "password2", "account_type", ]
+        fields = [
+            "first_name", 
+            "last_name", 
+            "dob", 
+            "phone_number", 
+            "country", 
+            "city", 
+            "state", 
+            "postal_code", 
+            "email", 
+            "password", 
+            "password2", 
+            "account_type", 
+            "image_url",
+            "is_verified",
+            ]
 
     def validate(self, attrs):
         email = attrs.get('email', '')
@@ -70,7 +147,7 @@ class RegisterSerializer(serializers.ModelSerializer):
             state = validated_data['state'],
             postal_code = validated_data['postal_code'],
             email = validated_data['email'],
-            account_type = validated_data['account_type'],
+            # account_type = validated_data['account_type'],
             password = make_password(validated_data['password'])
         )
         user.save()

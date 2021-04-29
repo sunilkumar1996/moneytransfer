@@ -7,4 +7,3 @@ from django.contrib.auth.models import Group
 
 AdminUser = get_user_model()
 admin.site.register(AdminUser)
-admin.site.unregister(Group)

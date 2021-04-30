@@ -13,7 +13,7 @@ from django.contrib.auth import views as pass_reset_views
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 from rest_framework import permissions
-from .helpers import LogoutAllView, LogoutView
+from .helpers import LogoutAllUserView, LogoutUserView
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -40,11 +40,12 @@ urlpatterns = [
     path('email-verify/', VerifyEmail.as_view(), name="email-verify"),
     # path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     # path('rest-auth/password/reset/confirm/<uidb64>/<token>/', PasswordResetConfirmView.as_view(), name="password_reset_confirm"),
-    path('api/logout/', LogoutView.as_view(), name='logout'),
-    path('api/logoutall/', LogoutAllView.as_view(), name='logoutall'),
+    path('api/logout/', LogoutUserView.as_view(), name='logout'),
+    path('api/logoutall/', LogoutAllUserView.as_view(), name='logoutall'),
     path('auth/change-password/', ChangePasswordView.as_view(), name='change-password'),
     # path('password_reset/', pass_reset_views.PasswordResetView.as_view(), name='password_reset'),
     path('password_reset/done/', pass_reset_views.PasswordResetDoneView.as_view(), name='password_reset_done'),
     path('reset/<uidb64>/<token>/', pass_reset_views.PasswordResetConfirmView.as_view(template_name="users/password_reset_confirm.html", ), name='password_reset_confirm'),
     path('reset/done/', pass_reset_views.PasswordResetCompleteView.as_view(template_name='users/password_reset_complete.html', ), name='password_reset_complete'),
+    path('update/profile/', views.UpdateProfileView.as_view(), name='update_profile'),
 ]

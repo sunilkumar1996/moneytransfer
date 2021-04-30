@@ -41,6 +41,7 @@ class LoginView(APIView):
         data = {
             'expiry': self.format_expiry_datetime(instance.expiry),
             'token': token,
+            'ID': self.request.user.id,
             'email': self.request.user.email,
             'first_name': self.request.user.first_name,
             'last_name': self.request.user.last_name,
@@ -79,7 +80,7 @@ class LoginView(APIView):
         return Response(data)
 
 
-class LogoutView(APIView):
+class LogoutUserView(APIView):
     authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAuthenticated,)
 
@@ -90,7 +91,7 @@ class LogoutView(APIView):
         return Response(None, status=status.HTTP_204_NO_CONTENT)
 
 
-class LogoutAllView(APIView):
+class LogoutAllUserView(APIView):
     '''
     Log the user out of all sessions
     I.E. deletes all auth tokens for the user

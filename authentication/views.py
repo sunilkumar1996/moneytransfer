@@ -1,6 +1,6 @@
 from django.shortcuts import render
-from rest_framework import generics, status, views, permissions
-from .serializers import RegisterSerializer, ChangePasswordSerializer, SetNewPasswordSerializer, ResetPasswordEmailRequestSerializer, EmailVerificationSerializer, LoginSerializer, LogoutSerializer, AuthTokenLoginSerializer
+from rest_framework import generics, status, views, permissions, mixins
+from .serializers import RegisterSerializer, ChangePasswordSerializer, SetNewPasswordSerializer, ResetPasswordEmailRequestSerializer, EmailVerificationSerializer, LoginSerializer, LogoutSerializer, AuthTokenLoginSerializer, UpdateUserSerializer
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
 from .models import User
@@ -34,7 +34,33 @@ class CustomRedirect(HttpResponsePermanentRedirect):
 
     allowed_schemes = [os.environ.get('APP_SCHEME'), 'http', 'https']
 
+
+class UserIsOwnerOrReadOnly(permissions.BasePermission):
+    def has_object_permission(self, request, view, obj):
+        if request.method in permissions.SAFE_METHODS:
+            return True
+        return obj.id == request.user.id
+
+
+class UpdateProfileView(generics.RetrieveAPIView, mixins.DestroyModelMixin, mixins.UpdateModelMixin):
+    """
+    User update Profile.
+    """
+    permission_classes = (permissions.IsAuthenticated, UserIsOwnerOrReadOnly)
+    serializer_class = UpdateUserSerializer
+
+    def get_object(self, queryset=None):
+        obj = self.request.user
+        return obj
+
+    def put(self, request, *args, **kwargs):
+        return self.update(request, *args, **kwargs)
+    
+
 class ChangePasswordView(generics.UpdateAPIView):
+    """
+    User password change with old passowrd.
+    """
     serializer_class = ChangePasswordSerializer
     model = User
     permission_classes = (permissions.IsAuthenticated,)
@@ -66,6 +92,9 @@ class ChangePasswordView(generics.UpdateAPIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class LoginApiKnox(KnoxLoginView):
+    """
+    Login with time limit and token authentication.
+    """
     permission_classes = (permissions.AllowAny, )
 
     def post(self, request, format=None):
@@ -78,6 +107,9 @@ class LoginApiKnox(KnoxLoginView):
 
 
 class RegisterView(generics.GenericAPIView):
+    """
+    Normal User Register with email verification.
+    """
 
     serializer_class = RegisterSerializer
     # renderer_classes = (UserRenderer,)
@@ -105,6 +137,9 @@ class RegisterView(generics.GenericAPIView):
 
 
 class VerifyEmail(views.APIView):
+    """
+    User Email verification method this method is account activate.
+    """
     serializer_class = EmailVerificationSerializer
 
     token_param_config = openapi.Parameter(

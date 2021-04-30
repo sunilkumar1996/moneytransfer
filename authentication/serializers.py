@@ -81,7 +81,50 @@ class ChangePasswordSerializer(serializers.Serializer):
     """
     old_password = serializers.CharField(required=True)
     new_password = serializers.CharField(required=True)
-    
+
+
+class UpdateUserSerializer(serializers.ModelSerializer):
+    # email = serializers.EmailField(required=True)
+    # first_name = serializers.CharField(required=True)
+    # last_name = serializers.CharField(required=True)
+    # dob = serializers.DateField(required=True)
+    # phone_number = serializers.CharField(required=True)
+    # country = serializers.CharField(required=True)
+    # city = serializers.CharField(required=True)
+    # state = serializers.CharField(required=True)
+    # postal_code = serializers.IntegerField(required=True)
+    image_url = serializers.ImageField(max_length=None, use_url=True, required=False)
+
+    class Meta:
+        model = User
+        fields = [
+            "first_name", 
+            "last_name", 
+            "dob", 
+            "phone_number", 
+            "country", 
+            "city", 
+            "state", 
+            "postal_code", 
+            "email", 
+            "account_type",
+            "image_url",
+            ]
+
+    def update(self, instance, validated_data):
+        instance.email = validated_data.get('email',instance.email)
+        instance.first_name = validated_data.get('first_name',instance.first_name)
+        instance.last_name = validated_data.get('last_name',instance.last_name)
+        instance.dob = validated_data.get('dob',instance.dob)
+        instance.phone_number = validated_data.get('phone_number',instance.phone_number)
+        instance.country = validated_data.get('country',instance.country)
+        instance.city = validated_data.get('city',instance.city)
+        instance.state = validated_data.get('state',instance.state)
+        instance.postal_code = validated_data.get('postal_code',instance.postal_code)
+        instance.account_type = validated_data.get('account_type',instance.account_type)
+        instance.image_url = validated_data.get('image_url', instance.image_url)
+        return instance 
+
 
 class RegisterSerializer(serializers.ModelSerializer):
 

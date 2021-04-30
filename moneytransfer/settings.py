@@ -202,6 +202,7 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 # Custom User Model And This model is full Authenticated, all type of user save this model like Super-User, normal User.
 
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
@@ -209,3 +210,4 @@ EMAIL_HOST_USER = "pythonteamdev@gmail.com"
 # EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = "Qwerty@123"
 # EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+DEFAULT_FROM_EMAIL = 'pythonteamdev@gmail.com' # but my real email address

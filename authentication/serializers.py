@@ -9,9 +9,7 @@ from django.utils.encoding import smart_str, force_str, smart_bytes, DjangoUnico
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from rest_framework.validators import UniqueValidator
 from django.contrib.auth.hashers import make_password
-from django.contrib.auth import authenticate
 from django.utils.translation import gettext_lazy as _
-
 User = get_user_model()
 
 class AuthTokenLoginSerializer(serializers.Serializer):

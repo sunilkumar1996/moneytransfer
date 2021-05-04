@@ -88,7 +88,11 @@ class LogoutUserView(APIView):
         request._auth.delete()
         user_logged_out.send(sender=request.user.__class__,
                              request=request, user=request.user)
-        return Response(None, status=status.HTTP_204_NO_CONTENT)
+        res = {
+            "message": "Logout successfully!!",
+            "success": True
+        }
+        return Response(res, status=status.HTTP_200_OK)
 
 
 class LogoutAllUserView(APIView):
@@ -103,4 +107,8 @@ class LogoutAllUserView(APIView):
         request.user.auth_token_set.all().delete()
         user_logged_out.send(sender=request.user.__class__,
                              request=request, user=request.user)
-        return Response(None, status=status.HTTP_204_NO_CONTENT)
+        res = {
+            "message": "Logout successfully all device !!",
+            "success": True
+        }
+        return Response(res, status=status.HTTP_200_OK)

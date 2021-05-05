@@ -188,7 +188,7 @@ class RegisterSerializer(serializers.ModelSerializer):
             state = validated_data['state'],
             postal_code = validated_data['postal_code'],
             email = validated_data['email'],
-            # account_type = validated_data['account_type'],
+            account_type = validated_data['account_type'],
             password = make_password(validated_data['password'])
         )
         user.save()

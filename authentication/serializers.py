@@ -10,6 +10,7 @@ from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from rest_framework.validators import UniqueValidator
 from django.contrib.auth.hashers import make_password
 from django.utils.translation import gettext_lazy as _
+
 User = get_user_model()
 
 class AuthTokenLoginSerializer(serializers.Serializer):
@@ -121,7 +122,9 @@ class UpdateUserSerializer(serializers.ModelSerializer):
         instance.postal_code = validated_data.get('postal_code',instance.postal_code)
         instance.account_type = validated_data.get('account_type',instance.account_type)
         instance.image_url = validated_data.get('image_url', instance.image_url)
-        return instance 
+        print("Image Url : ", instance.image_url)
+        instance.save()
+        return instance
 
 
 class RegisterSerializer(serializers.ModelSerializer):
